@@ -18,6 +18,7 @@ from geometry_msgs.msg import Twist
 
 import rclpy
 from rclpy.node import Node
+from rclpy.duration import Duration
 
 from tf2_ros import TransformException
 from tf2_ros.buffer import Buffer
@@ -64,11 +65,13 @@ class FrameListener(Node):
                 # Look up for the transformation between target_frame and turtle2 frames
                 # and send velocity commands for turtle2 to reach target_frame
                 try:
-                    now = rclpy.time.Time()
+                    # now = rclpy.time.Time()
+                    now = self.get_clock().now()
                     trans = self.tf_buffer.lookup_transform(
                         to_frame_rel,
                         from_frame_rel,
-                        now)
+                        now,
+                        timeout=Duration(seconds=0.05))
                 except TransformException as ex:
                     self.get_logger().info(
                         f'Could not transform {to_frame_rel} to {from_frame_rel}: {ex}')

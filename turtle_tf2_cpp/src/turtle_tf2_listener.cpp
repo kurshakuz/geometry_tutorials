@@ -75,7 +75,8 @@ private:
         try {
           transformStamped = tf_buffer_->lookupTransform(
             toFrameRel, fromFrameRel,
-            tf2::TimePointZero);
+            this->get_clock()->now(),
+            50ms);
         } catch (tf2::TransformException & ex) {
           RCLCPP_INFO(
             this->get_logger(), "Could not transform %s to %s: %s",
