@@ -26,11 +26,6 @@ def generate_launch_description():
             description='Target frame name.'
         ),
         Node(
-            package='turtlesim',
-            executable='turtlesim_node',
-            name='sim'
-        ),
-        Node(
             package='turtle_tf2_py',
             executable='turtle_tf2_broadcaster',
             name='broadcaster1',
